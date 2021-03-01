@@ -6,6 +6,7 @@ class MicrosmsApi {
     constructor(shopID, hash, hashType) {
         this.microsms = {}
 
+        shopID = parseInt(shopID)
         if (numberValidator(shopID)) this.microsms.shopID = shopID
         else throw new Error('No ShopID provided or provided ShopID is invalid.')
 
