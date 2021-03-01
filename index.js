@@ -16,7 +16,7 @@ class MicrosmsApi {
         else throw new Error('No hashType provided or provided hashType is invalid.')
     }
 
-    async generateTransaction(amount, webhookUrl, redirectUrl, description, control) {
+    generateTransaction(amount, webhookUrl, redirectUrl, description, control) {
         if (!numberValidator(amount))
             throw new Error('No amount provided or provided amount is invalid.')
 
@@ -39,6 +39,32 @@ class MicrosmsApi {
         return encodeURI(
             `https://microsms.pl/api/bankTransfer/?shopid=${this.microsms.shopID}&signature=${signature}&amount=${amount}&control=${control}&return_urlc=${webhookUrl}&return_url=${redirectUrl}&description=${description}`
         )
+    }
+
+    checkPaymentStatus(status, orderID, hash) {
+        const localHash =
+            this.microsms.hashType === 'sha256'
+                ? sha256(`true${orderID}${this.microsms.hash}`)
+                : md5(`true${orderID}${this.microsms.hash}`)
+
+        if (hash === localHash) {
+            if (status) {
+                return {
+                    status: 'SUCCESS',
+                    message: 'Payment was successful.',
+                }
+            } else {
+                return {
+                    status: 'UNPAID',
+                    message: "Payment wasn't successful.",
+                }
+            }
+        } else {
+            return {
+                status: 'ERROR',
+                message: 'Provided hash is invalid.',
+            }
+        }
     }
 }
 

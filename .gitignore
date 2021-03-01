@@ -1,3 +1,4 @@
 .prettierrc
 .idea
 node_modules
+tests.js

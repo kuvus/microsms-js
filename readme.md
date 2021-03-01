@@ -16,8 +16,7 @@ yarn add microsms-js
 const MicrosmsApi = require('microsms-js')
 const microsms = new MicrosmsApi(shopID, hash, hashType)
 
-microsms.generateTransaction(amount, webhookURL, redirectURL, description, controlID)
-    .then(transactionURL => console.log(transactionURL))
+const transactionURL = microsms.generateTransaction(amount, webhookURL, redirectURL, description, controlID)
 ```
 
 ## Links
