@@ -42,5 +42,4 @@ class MicrosmsApi {
     }
 }
 
-const micro = new MicrosmsApi(713, 'Ec8Tf1!o4Gh4!z4Fk4Pc6Tz3Aa5Td4!i', 'md5')
-micro.generateTransaction(1, 'a', 'a', 'test', 't-1').then(r => console.log(r))
+module.exports = MicrosmsApi
